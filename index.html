@@ -199,10 +199,20 @@
       let flipped = false;
 
       const symbols = {
-        wK: "♔", wQ: "♕", wR: "♖",
-        wB: "♗", wN: "♘", wP: "♙",
-        bK: "♚", bQ: "♛", bR: "♜",
-        bB: "♝", bN: "♞", bP: "♟"
+  wK: "brancas_rei.png",
+  wQ: "brancas_dama.png",
+  wR: "brancas_torre.png",
+  wB: "brancas_bispo.png",
+  wN: "brancas_cavalo.png",
+  wP: "brancas_peao.png",
+
+  bK: "pretas_rei.png",
+  bQ: "pretas_dama.png",
+  bR: "pretas_torre.png",
+  bB: "pretas_bispo.png",
+  bN: "pretas_cavalo.png",
+  bP: "pretas_peao.png"
+
       };
 
       function updateStatus() {
@@ -261,19 +271,19 @@
               );
             }
 
-            if (piece) {
-              const span = document.createElement("span");
-              span.className =
-                "piece " +
-                (piece.color === "w"
-                  ? "white-piece"
-                  : "black-piece");
+if (piece) {
+  const img = document.createElement("img");
 
-              span.textContent =
-                symbols[piece.color + piece.type.toUpperCase()];
+  img.className = "piece-img";
 
-              square.appendChild(span);
-            }
+  img.src = symbols[
+    piece.color + piece.type.toUpperCase()
+  ];
+
+  img.alt = piece.type;
+
+  square.appendChild(img);
+}
 
             square.addEventListener("click", () => clickSquare(name));
             board.appendChild(square);
