@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,165 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xadrez Online</title>
 
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 24px 12px;
-      background: #171923;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    h1 {
-      color: #f0c674;
-      margin-bottom: 8px;
-    }
-
-    #status {
-      margin: 12px;
-      font-size: 18px;
-      text-align: center;
-    }
-
-#board {
-  width: min(92vw, 560px);
-  height: min(92vw, 560px);
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-template-rows: repeat(8, minmax(0, 1fr));
-  box-sizing: border-box;
-  padding: 0;
-  border: 5px solid #4b3828;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-
-.square {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-  aspect-ratio: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  line-height: 1;
-  overflow: hidden;
-}
-
-    .square {
-      aspect-ratio: 1;
-      border: none;
-      padding: 0;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: clamp(25px, 7.5vw, 58px);
-      user-select: none;
-    }
-
-    .light { background: #f0d9b5; }
-    .dark { background: #779556; }
-
-    .square.selected {
-      background: #f6f669;
-    }
-
-    .square.target::after {
-      content: "";
-      position: absolute;
-      width: 25%;
-      height: 25%;
-      background: #233b2c;
-      opacity: .6;
-      border-radius: 50%;
-    }
-
-    .square.takes::after {
-      content: "";
-      position: absolute;
-      inset: 5%;
-      border: 5px solid #d33;
-      border-radius: 50%;
-    }
-
-    .piece {
-      position: relative;
-      z-index: 1;
-      line-height: 1;
-    }
-    
-    .piece-img {
-  width: 65%;
-  height: 65%;
-  object-fit: contain;
-  display: block;
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
-}
-
-    .white-piece {
-      color: #fff;
-      text-shadow:
-        -1px -1px #222, 1px -1px #222,
-        -1px 1px #222, 1px 1px #222,
-        0 2px 2px #333;
-    }
-
-    .black-piece {
-      color: #171717;
-      text-shadow: 0 1px 1px #aaa;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    .controls button {
-      padding: 12px 16px;
-      border: none;
-      border-radius: 8px;
-      background: #f0c674;
-      color: #171923;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .controls button:hover {
-      background: #ffdc91;
-    }
-
-    #message {
-      color: #f0c674;
-      text-align: center;
-      margin-top: 15px;
-      min-height: 22px;
-    }
-
-    .note {
-      color: #c5c8d0;
-      font-size: 13px;
-      text-align: center;
-    }
-  </style>
+  <!-- Arquivo CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -181,7 +25,6 @@
   <div id="message" aria-live="polite"></div>
   <p class="note">Jogue com outra pessoa no mesmo computador.</p>
 
-  <!-- Biblioteca de regras do xadrez -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
 
   <script>
@@ -209,20 +52,19 @@
       let flipped = false;
 
       const symbols = {
-  wK: "brancas_rei.png",
-  wQ: "brancas_dama.png",
-  wR: "brancas_torre.png",
-  wB: "brancas_bispo.png",
-  wN: "brancas_cavalo.png",
-  wP: "brancas_peao.png",
+        wK: "brancas_rei.png",
+        wQ: "brancas_dama.png",
+        wR: "brancas_torre.png",
+        wB: "brancas_bispo.png",
+        wN: "brancas_cavalo.png",
+        wP: "brancas_peao.png",
 
-  bK: "pretas_rei.png",
-  bQ: "pretas_dama.png",
-  bR: "pretas_torre.png",
-  bB: "pretas_bispo.png",
-  bN: "pretas_cavalo.png",
-  bP: "pretas_peao.png"
-
+        bK: "pretas_rei.png",
+        bQ: "pretas_dama.png",
+        bR: "pretas_torre.png",
+        bB: "pretas_bispo.png",
+        bN: "pretas_cavalo.png",
+        bP: "pretas_peao.png"
       };
 
       function updateStatus() {
@@ -281,19 +123,17 @@
               );
             }
 
-if (piece) {
-  const img = document.createElement("img");
+            if (piece) {
+              const img = document.createElement("img");
 
-  img.className = "piece-img";
+              img.className = "piece-img";
+              img.src = symbols[
+                piece.color + piece.type.toUpperCase()
+              ];
+              img.alt = piece.type;
 
-  img.src = symbols[
-    piece.color + piece.type.toUpperCase()
-  ];
-
-  img.alt = piece.type;
-
-  square.appendChild(img);
-}
+              square.appendChild(img);
+            }
 
             square.addEventListener("click", () => clickSquare(name));
             board.appendChild(square);
@@ -392,3 +232,4 @@ if (piece) {
   </script>
 </body>
 </html>
+```
